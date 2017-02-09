@@ -7,6 +7,8 @@
 [AddComponentMenu("Badin/Game Area")]
 public class GameArea : MonoBehaviour {
 
+    [SerializeField]
+    [HideInInspector]
     private Rect area;
 
     public Rect Area
@@ -15,21 +17,25 @@ public class GameArea : MonoBehaviour {
         set { area = value; }
     }
 
-    public Vector2 Size;
     public Color gizmoColor = new Color(0, 0, 1, 0.2f);
     private Color gizmoWireColor;
 
-    public void SetArea(Vector2 size)
+
+    private Vector2 size;
+    public Vector2 Size
     {
-        Size = size;
-        Area = new Rect(size.x * -0.5f, size.y * -0.5f, size.x, size.y);
+        get { return Area.size; }
+        set
+        {
+            size = value;
+            Area = new Rect(size.x * -0.5f, size.y * -0.5f, size.x, size.y);
+        }
     }
 
-
-    private void Awake()
-    {
-   //     SetArea(size);
-    }
+    //public void SetArea(Vector2 size)
+    //{
+       
+    //}
 
     private void OnDrawGizmos()
     {
@@ -42,7 +48,7 @@ public class GameArea : MonoBehaviour {
     }
     private void OnValidate()
     {
-        SetArea(Size);
+        Size = size;
         gizmoWireColor = new Color(gizmoColor.r, gizmoColor.g, gizmoColor.b, 1f);
     }
 }
