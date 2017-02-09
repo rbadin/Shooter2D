@@ -15,18 +15,20 @@ public class GameArea : MonoBehaviour {
         set { area = value; }
     }
 
-    public Vector2 size;
+    public Vector2 Size;
     public Color gizmoColor = new Color(0, 0, 1, 0.2f);
     private Color gizmoWireColor;
+
     public void SetArea(Vector2 size)
     {
+        Size = size;
         Area = new Rect(size.x * -0.5f, size.y * -0.5f, size.x, size.y);
     }
 
 
     private void Awake()
     {
-        SetArea(size);
+   //     SetArea(size);
     }
 
     private void OnDrawGizmos()
@@ -40,7 +42,7 @@ public class GameArea : MonoBehaviour {
     }
     private void OnValidate()
     {
-        SetArea(size);
+        SetArea(Size);
         gizmoWireColor = new Color(gizmoColor.r, gizmoColor.g, gizmoColor.b, 1f);
     }
 }
