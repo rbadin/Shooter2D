@@ -7,29 +7,30 @@ using UnityEngine;
 /// When the object leaves the area on the right, it comes back on the left.
 /// </summary>
 /// 
-[AddComponentMenu("Cangaia Corportation/Transform Looper")]
+[AddComponentMenu("Badin/Transform Looper")]
 public class TransformLooper : MonoBehaviour
 {
 
-    public Rect area;
+    public GameArea gameArea;
     Vector3 position;
 
     private void Update()
     {
-        position = transform.position;
+        position = gameArea.transform.InverseTransformPoint(transform.position);
 
-        if (area.Contains(position)) return;
+        if (gameArea.Area.Contains(position)) return;
 
-        if (position.x < area.xMin)
-            position.x = area.xMax;
-        else if (position.x > area.xMax)
-            position.x = area.xMin;
+        if (position.x < gameArea.Area.xMin)
+            position.x = gameArea.Area.xMax;
+        else if (position.x > gameArea.Area.xMax)
+            position.x = gameArea.Area.xMin;
 
-        if (position.y < area.yMin)
-            position.y = area.yMax;
-        else if (position.y > area.yMax)
-            position.y = area.yMin;
+        if (position.y < gameArea.Area.yMin)
+            position.y = gameArea.Area.yMax;
+        else if (position.y > gameArea.Area.yMax)
+            position.y = gameArea.Area.yMin;
 
-        transform.position = position;
+        transform.position = gameArea.transform.InverseTransformPoint(position);
     }
+
 }
