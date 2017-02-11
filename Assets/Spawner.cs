@@ -4,31 +4,41 @@ using UnityEngine;
 
 public class Spawner : MonoBehaviour
 {
-    [Header ("SPAWN")]
+    [Header("Spawn")]
     public GameObject reference;
-    [Header("SPAWNING")]
-    [Range (0.001f, 100f)] public float rate = 1.0f;
+    [Header("Spawning")]
+    [Range(0.001f, 100f)] public float minRate = 1.0f;
+    [Range(0.001f, 100f)] public float maxRate = 1.0f;
     public bool infinite;
     public int number = 5;
+    [Header("Locations")]
+    public GameArea area;
 
     //private float timeStamp;
     private int remaining;
 
     private void Start()
     {
-       // timeStamp = Time.time;
+        // timeStamp = Time.time;
         remaining = number;
         StartCoroutine("Spawn");
     }
 
     private IEnumerator Spawn()
     {
-        while (infinite|| remaining >0)
+        while (infinite || remaining > 0)
         {
-            Instantiate(reference, transform.position, transform.rotation);
+            Vector3 position = area ? area.GetRandomPosition() : transform.position;
+            //Vector3 position;
+            //if (area)
+            //    position = area.GetRandomPosition();
+            //else
+            //    position = transform.position;
+
+            Instantiate(reference, position, transform.rotation);
             remaining--;
 
-            yield return new WaitForSeconds(1 / rate);
+            yield return new WaitForSeconds(1 / Random.Range(minRate, maxRate));
         }
     }
 
